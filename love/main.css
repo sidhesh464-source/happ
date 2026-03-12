@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Pacifico&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html,
+  body {
+    height: 100%;
+    touch-action: none; 
+  }
+  
+  body {
+    overflow: auto;
+    display: flex;
+    font-family: "Pacifico", sans-serif;
+    background: #000000;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+  
+  #drag-container, #spin-container {
+    position: relative;
+    display: flex;
+    margin: auto;
+    transform-style: preserve-3d;
+    transform: rotateX(-10deg);
+    z-index: 100;
+  }
+  
+  #drag-container img {
+    transform-style: preserve-3d;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 120px;
+    height: 170px; 
+    line-height: 200px;
+    font-size: 50px;
+    text-align: center;
+    box-shadow: 0 0 8px #fff;
+    -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0005);
+    border: 3px solid #fff;
+    border-radius: 5px;
+  }
+  
+  #drag-container img:hover {
+    box-shadow: 0 0 15px #fffd;
+    -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0007);
+  }
+  
+  #drag-container p {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%,-50%) rotateX(90deg);
+    color: #ffffff;
+    text-shadow: 0 0 10px #ff217d, 0 0 20px #ff217d, 0 0 30px #ff217d;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.2rem, 5vw, 2.5rem);
+    animation: fadein ease 15s;
+    white-space: nowrap;
+  }
+
+  @keyframes fadein {
+      from { opacity:0; }
+      to { opacity: 1; }
+  }
+  
+  #ground {
+    width: 900px;
+    height: 900px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%,-50%) rotateX(90deg);
+    background: -webkit-radial-gradient(center center, farthest-side , #ff217d22, transparent);
+  }
+  
+  #music-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  
+  @keyframes spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
+  
+  @keyframes spinRevert {
+    from { transform: rotateY(360deg); }
+    to { transform: rotateY(0deg); }
+  }
+
+  #canvas {
+    background-color:transparent;   
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+  }
+
+#canva {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+@media screen and (max-width: 658px) {
+  #drag-container img {
+    width: 80px;
+    height: 110px;
+  }
+  #drag-container p {
+    font-size: 1.5rem;
+    top: 110%;
+  }
+}
