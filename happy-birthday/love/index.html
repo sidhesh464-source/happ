@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Bhuvana! | Finale</title>
+    <link rel="shortcut icon" href="https://www.palingit.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="drag-container">
+        <div id="spin-container">
+            <!-- 10 Images for the 3D Carousel from the original repo -->
+            <img src="../img/1.png" alt="">
+            <img src="../img/2.png" alt="">
+            <img src="../img/3.png" alt="">
+            <img src="../img/4.png" alt="">
+            <img src="../img/5.png" alt="">
+            <img src="../img/1.png" alt="">
+            <img src="../img/2.png" alt="">
+            <img src="../img/3.png" alt="">
+            <img src="../img/4.png" alt="">
+            <img src="../img/5.png" alt="">
+            <p>Happy Birthday Bhuvana</p>
+        </div>
+        <div id="ground"></div>
+    </div>
+    
+    <div id="music-container"></div>
+    
+    <div id="canva">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script src="main.js"></script>
+
+    <script>
+        window.onload = function() {
+            // Heart-Background Effect Canvas Logic
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            function random(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function Heart(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = random(8, 22);
+                this.color = `hsl(${random(340, 360)}, 100%, 65%)`; // Vibrant heart color
+                this.vy = random(-3, -1);
+                this.opacity = 1;
+            }
+
+            Heart.prototype.draw = function () {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.bezierCurveTo(this.x - this.size / 2, this.y - this.size / 2, this.x - this.size, this.y + this.size / 3, this.x, this.y + this.size);
+                ctx.bezierCurveTo(this.x + this.size, this.y + this.size / 3, this.x + this.size / 2, this.y - this.size / 2, this.x, this.y);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            };
+
+            Heart.prototype.update = function () {
+                this.y += this.vy;
+                this.opacity -= 0.003;
+            };
+
+            let hearts = [];
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (Math.random() < 0.3) { // Increased frequency
+                    hearts.push(new Heart(random(0, canvas.width), canvas.height + 25));
+                }
+
+                hearts.forEach((heart, index) => {
+                    heart.draw();
+                    heart.update();
+                    if (heart.opacity <= 0) {
+                        hearts.splice(index, 1);
+                    }
+                });
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        };
+    </script>
+</body>
+</html>
